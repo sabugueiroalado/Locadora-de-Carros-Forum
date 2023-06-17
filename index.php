@@ -27,8 +27,11 @@ session_start();
         <form method="get" action="relatorio.php">       
         <input type="submit" value="Relatório">
         </form>
-        <form method="get" action="consulta.php">
+        <form method="get" action="consultar.php">
         <input type="submit" value="Consultar">
-        </form>  
+        </form>
+        <form method="get" action="conexao.php">
+        <input type="submit" value="test">
+        </form>
   </body>
 </html>

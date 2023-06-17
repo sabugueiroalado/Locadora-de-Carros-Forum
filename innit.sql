@@ -1,7 +1,3 @@
-CREATE DATABASE locadora;
-USE locadora;
-SHOW TABLES;
-
 CREATE TABLE Marcas (
   codigo INT PRIMARY KEY,
   descricao VARCHAR(50)
@@ -89,3 +85,29 @@ SELECT L.codigo, C.descricao, U.nome
 FROM Locacoes AS L
 RIGHT JOIN Carros AS C ON L.codigo_carro = C.codigo
 RIGHT JOIN Usuarios AS U ON L.codigo_cliente = U.codigo;
+
+DELIMITER //
+CREATE PROCEDURE SaveUsuario (
+  IN p_codigo INT,
+  IN p_nome VARCHAR(50),
+  IN p_email VARCHAR(100),
+  IN p_senha VARCHAR(50)
+)
+BEGIN
+  INSERT INTO Usuarios (codigo, nome, email, senha)
+  VALUES (p_codigo, p_nome, p_email, p_senha);
+END //
+DELIMITER ;
+
+CALL SaveUsuario(5, 'John Doe', 'john@example.com', 'password123');
+
+DELIMITER //
+CREATE TRIGGER UpdateModelosDescricao
+AFTER UPDATE ON Marcas
+FOR EACH ROW
+BEGIN
+  UPDATE Modelos
+  SET descricao = NEW.descricao
+  WHERE codigo_marca = OLD.codigo;
+END //
+DELIMITER ;
